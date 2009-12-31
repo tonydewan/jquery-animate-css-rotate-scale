@@ -14,8 +14,12 @@ This monkey patch for jQuery 1.3.1+ allows you to:
    $('#example').rotate('30deg');
    $('#example').scale(1.5);
    $('#example').rotate('45deg');
+   $('#example').translateX(150);
+   $('#example').translateY(150);
    $('#example').rotate(); // returns '45deg'
    $('#example').scale(); // returns '1.5'
+   $('#example').translateX(); // returns '150px'
+   $('#example').translateY(); // returns '150px'
 
 2. Animate rotate and scale CSS transforms independently using jQuery's
    animate() method.
@@ -47,6 +51,6 @@ under both MIT and GPL licenses, just like jQuery.
 -----------------------------
 Change Log
 -----------------------------
-
+2009.12.30 - Added (partial) support for translateX and translateY
 2009.07.15 - Added to GitHub
 

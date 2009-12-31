@@ -1,8 +1,10 @@
 (function ($) {
     // Monkey patch jQuery 1.3.1+ to add support for setting or animating CSS
     // scale and rotation independently.
-    // 2009 Zachary Johnson www.zachstronaut.com
+    // original: 2009 Zachary Johnson www.zachstronaut.com
+	// updated: 12/2009 Tony Dewan tonydewan.com
     var rotateUnits = 'deg';
+	var translateUnits = 'px';
     
     $.fn.rotate = function (val)
     {
@@ -62,6 +64,54 @@
         );
     }
 
+    $.fn.translateX = function (val, duration, options)
+    {
+        var style = $(this).css('transform');
+        
+        if (typeof val == 'undefined')
+        {
+            if (style)
+            {
+                var m = style.match(/translateX\(([^)]+)\)/);
+                if (m && m[1])
+                {
+                    return m[1];
+                }
+            }
+            
+            return 1;
+        }
+        
+        $(this).css(
+            'transform',
+            style.replace(/none|translateX\([^)]*\)/, '') + 'translateX(' + val + translateUnits + ')'
+        );
+    }
+
+    $.fn.translateY = function (val, duration, options)
+    {
+        var style = $(this).css('transform');
+        
+        if (typeof val == 'undefined')
+        {
+            if (style)
+            {
+                var m = style.match(/translateY\(([^)]+)\)/);
+                if (m && m[1])
+                {
+                    return m[1];
+                }
+            }
+            
+            return 1;
+        }
+        
+        $(this).css(
+            'transform',
+            style.replace(/none|translateY\([^)]*\)/, '') + 'translateY(' + val + translateUnits + ')'
+        );
+    }
+
     // fx.cur() must be monkey patched because otherwise it would always
     // return 0 for current rotate and scale values
     var curProxied = $.fx.prototype.cur;
@@ -70,6 +120,14 @@
         if (this.prop == 'rotate')
         {
             return parseFloat($(this.elem).rotate());
+        }
+        else if (this.prop == 'translateX')
+        {
+            return parseFloat($(this.elem).translateX());
+        }
+        else if (this.prop == 'translateY')
+        {
+            return parseFloat($(this.elem).translateY());
         }
         else if (this.prop == 'scale')
         {
@@ -88,8 +146,19 @@
     {
         $(fx.elem).scale(fx.now);
     }
-    
-    /*
+
+    $.fx.step.translateX = function (fx)
+    {
+        $(fx.elem).translateX(fx.now);
+    }
+   
+    $.fx.step.translateY = function (fx)
+    {
+        $(fx.elem).translateY(fx.now);
+    }
+
+ 
+   /*
     
     Starting on line 3905 of jquery-1.3.2.js we have this code:
     
