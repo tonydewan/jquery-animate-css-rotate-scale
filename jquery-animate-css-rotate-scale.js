@@ -32,7 +32,7 @@
                 rotateUnits = m[3];
             }
             
-            $(this).css(
+            return $(this).css(
                 'transform',
                 style.replace(/none|rotate\([^)]*\)/, '') + 'rotate(' + m[1] + rotateUnits + ')'
             );
@@ -57,8 +57,8 @@
             
             return 1;
         }
-        
-        $(this).css(
+        if(typeof duration !== "undefined"
+        return $(this).css(
             'transform',
             style.replace(/none|scale\([^)]*\)/, '') + 'scale(' + val + ')'
         );
@@ -82,7 +82,7 @@
             return 1;
         }
         
-        $(this).css(
+        return $(this).css(
             'transform',
             style.replace(/none|translateX\([^)]*\)/, '') + 'translateX(' + val + translateUnits + ')'
         );
@@ -106,7 +106,7 @@
             return 1;
         }
         
-        $(this).css(
+        return $(this).css(
             'transform',
             style.replace(/none|translateY\([^)]*\)/, '') + 'translateY(' + val + translateUnits + ')'
         );
